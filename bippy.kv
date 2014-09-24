@@ -1,0 +1,17 @@
+<TopActionBar>:
+	id: topActionBar
+
+	ActionView:
+	    id: topActionView
+
+	    ActionPrevious:
+	        id: topActionPrevious
+	        with_previous: True
+	        app_icon: 'res/icons/nubits.png'
+	        title: app.get_string('Main_Title')
+	        on_release: root.reset_ui()
+
+	    ActionToggleButton:
+	        id: topInfoButton
+	        icon: 'res/icons/info.png'
+	        on_release: app.toggle_info()

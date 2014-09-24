@@ -1,0 +1,69 @@
+<ResultsScreen>:
+	name: 'Results'
+
+	BoxLayout:
+		orientation: 'horizontal'
+
+		FloatLayout:
+			id: mainLayout
+			size_hint: (0.735, 1)
+
+			Label:
+				id: mainLabel
+				size_hint: (None, None)
+				width: 700
+				height: 150
+				pos: (20, 200)
+
+			Label:
+				id: topLabel
+				size_hint: (None, None)
+				width: 100
+				height: 30
+				pos: (40, 170)
+
+			TextInput:
+				id: topField
+				size_hint: (None, None)
+				width: 540
+				height: 30
+				pos: (180, 170)
+				multiline: False
+
+			Label:
+				id: middleLabel
+				size_hint: (None, None)
+				width: 100
+				height: 30
+				pos: (40, 110)
+
+			TextInput:
+				id: middleField
+				size_hint: (None, None)
+				width: 400
+				height: 30
+				pos: (180, 110)
+				multiline: False
+
+			Label:
+				id: bottomLabel
+				size_hint: (None, None)
+				width: 100
+				height: 30
+				pos: (40, 50)
+
+			TextInput:
+				id: bottomField
+				size_hint: (None, None)
+				width: 400
+				height: 30
+				pos: (180, 50)
+				multiline: False
+
+
+		AsyncImage:
+			id: image
+			source: 'res/images/HomePageImage.png'
+			size_hint: (.265, 1)
+			allow_stretch: True
+			keep_ratio: False
