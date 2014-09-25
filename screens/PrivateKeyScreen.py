@@ -22,7 +22,7 @@ class PrivateKeyScreen(Screen):
 		self.newKey = BooleanProperty(False)
 		self.isCompressed = True
 		self.isBip = BooleanProperty(False)
-		self.type = StringProperty()
+		self.type = False
 
 		#Link to the widgets
 		#New Key page
@@ -127,6 +127,7 @@ class PrivateKeyScreen(Screen):
 			self.privateKeyInputEK.text = ''
 			self.type = 'BIP'
 			self.passphrase_entry()
+			self.BippyApp.set_info('Bip_Key_Entered_Info')
 			return
 		#check if it is a compressed or uncompressed WIF key
 		isWif, comment = key.isWif(text)
@@ -144,6 +145,7 @@ class PrivateKeyScreen(Screen):
 			self.privateKey = text
 			self.type = 'WIF'
 			self.passphrase_entry()
+			self.BippyApp.set_info('Valid_Key_Entered_Info')
 			return
 		#check if it's a hex key
 		if key.isHex(text) is True:
@@ -152,6 +154,7 @@ class PrivateKeyScreen(Screen):
 			self.privateKeyInputEK.text = ''
 			self.type = 'HEX'
 			self.passphrase_entry()
+			self.BippyApp.set_info('Valid_Key_Entered_Info')
 			return
 		#check if it's a base64 key
 		if key.isBase64(text) is True:
@@ -160,6 +163,7 @@ class PrivateKeyScreen(Screen):
 			self.privateKeyInputEK.text = ''
 			self.type = 'B64'
 			self.passphrase_entry()
+			self.BippyApp.set_info('Valid_Key_Entered_Info')
 			return
 		#check if it's a base6 key
 		if key.isBase6(text) is True:
@@ -168,9 +172,11 @@ class PrivateKeyScreen(Screen):
 			self.privateKeyInputEK.text = ''
 			self.type = 'B6'
 			self.passphrase_entry()
+			self.BippyApp.set_info('Valid_Key_Entered_Info')
 			return
 
 		#None of the above rules match so no key has been detected
+		self.type = False
 		self.BippyApp.show_popup(self.BippyApp.get_string('Popup_Error'), self.BippyApp.get_string('Not_Private_Key'))
 		self.reset_ui(None)
 		return
@@ -195,10 +201,10 @@ class PrivateKeyScreen(Screen):
 		"""
 			set the info text based on which accordion item is collapsed
 		"""
-		if self.newKeyAccordionItem.collapse is True:
-			self.BippyApp.set_info('Private Key')
+		if self.newKeyAccordionItem.collapse is True and self.type is not False:
+			self.BippyApp.set_info('Private_Key_Screen_Info')
 		else:
-			self.BippyApp.set_info('New Private Key')
+			self.BippyApp.set_info('Private_Key_New_Key_Screen_Info')
 		return
 
 	def check_passphrase(self, passfield, checkfield, feedback, layout, button):
