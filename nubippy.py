@@ -21,7 +21,6 @@ from kivy.uix.screenmanager import ScreenManager
 from kivy.animation import Animation
 from kivy.uix.actionbar import ActionBar
 from kivy.uix.screenmanager import SlideTransition
-from kivy.properties import StringProperty
 from kivy.uix.popup import Popup
 
 from kivy.lang import Builder
@@ -39,7 +38,7 @@ class TopActionBar(ActionBar):
 
 	def __init__(self, **kwargs):
 		super(TopActionBar, self).__init__(**kwargs)
-		self.infoButton = self.ids.topInfoButton.__self__
+		#self.infoButton = self.ids.topInfoButton.__self__
 
 	def reset_ui(self):
 		"""
@@ -51,7 +50,7 @@ class TopActionBar(ActionBar):
 		return
 
 
-class BippyApp(App):
+class NubippyApp(App):
 	"""
 		The application Class for Bippy
 	"""
@@ -72,7 +71,7 @@ class BippyApp(App):
 		raise SystemExit
 
 	def __init__(self, **kwargs):
-		super(BippyApp, self).__init__(**kwargs)
+		super(NubippyApp, self).__init__(**kwargs)
 		self.isPopup = False
 		self.show_info = False
 		return
@@ -108,19 +107,12 @@ class BippyApp(App):
 
 		return self.root
 
-	def set_info(self, screen):
+	def set_info(self, info):
 		"""
 			Read the info from the <language>.json file and set it as the info text
 		"""
-		screenName = None
-		for k, v in BippyApp.lang.iteritems():
-			if v == screen:
-				if 'Screen' not in k or 'Screen_Info' in k:
-					continue
-				screenName = k
-				break
-		if screenName is not None:
-			self.infoText.text = BippyApp.get_string(screenName + '_Info')
+		self.infoText.text = BippyApp.get_string(info)
+		return
 
 	def toggle_info(self):
 		"""
@@ -177,5 +169,5 @@ class BippyApp(App):
 		return return_string
 
 if __name__ == '__main__':
-	BippyApp = BippyApp()
+	BippyApp = NubippyApp()
 	BippyApp.run()
