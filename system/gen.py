@@ -17,7 +17,6 @@ def genBIPKey(passphrase, entropy='', privateKey=''):
 	bPublicAddress, sPublicAddress = address.publicKey2Address(address.privateKey2PublicKey(privateKey))
 	#BIP38 encryption
 	BIP = bip38.encrypt(privK256, bPublicAddress, sPublicAddress, str(passphrase))
-	print(decBIPKey(BIP, str(passphrase)))
 	return BIP, bPublicAddress, sPublicAddress
 	
 def encBIPKey(privK, passphrase):

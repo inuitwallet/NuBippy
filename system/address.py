@@ -1,5 +1,4 @@
 import hashlib
-import random
 import num.elip as elip
 import num.enc as enc
 
@@ -23,7 +22,6 @@ def publicKey2Address(publicKey):
 	bAddress = base58Encode(hashlib.new('ripemd160', hashlib.sha256(publicKey.decode('hex')).digest()).digest(), 25, 'B')
 	sAddress = base58Encode(hashlib.new('ripemd160', hashlib.sha256(publicKey.decode('hex')).digest()).digest(), 63, 'S')
 	return bAddress, sAddress
-
 
 def base58Encode(r160, magicbyte, prefix):
 	"""
