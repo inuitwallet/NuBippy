@@ -26,6 +26,7 @@ from kivy.uix.popup import Popup
 from kivy.lang import Builder
 
 import json
+import random
 
 import screens.PrivateKeyScreen as PrivateKeyScreen
 import screens.ResultsScreen as ResultsScreen
@@ -38,19 +39,19 @@ class TopActionBar(ActionBar):
 
 	def __init__(self, **kwargs):
 		super(TopActionBar, self).__init__(**kwargs)
-		#self.infoButton = self.ids.topInfoButton.__self__
+		return
 
 	def reset_ui(self):
 		"""
 			clear all input text from ui
 		"""
-		BippyApp.mainScreenManager.transition = SlideTransition(direction='left')
-		BippyApp.mainScreenManager.current = BippyApp.get_string('Private_Key_Screen')
-		BippyApp.reset_ui()
+		NuBippyApp.mainScreenManager.transition = SlideTransition(direction='left')
+		NuBippyApp.mainScreenManager.current = NuBippyApp.get_string('Private_Key_Screen')
+		NuBippyApp.reset_ui()
 		return
 
 
-class NubippyApp(App):
+class NuBippyApp(App):
 	"""
 		The application Class for Bippy
 	"""
@@ -71,7 +72,7 @@ class NubippyApp(App):
 		raise SystemExit
 
 	def __init__(self, **kwargs):
-		super(NubippyApp, self).__init__(**kwargs)
+		super(NuBippyApp, self).__init__(**kwargs)
 		self.isPopup = False
 		self.show_info = False
 		return
@@ -100,10 +101,10 @@ class NubippyApp(App):
 		self.privateKeyScreen = PrivateKeyScreen.PrivateKeyScreen(self)
 		Builder.load_file('screens/ResultsScreen.kv')
 		self.resultsScreen = ResultsScreen.ResultsScreen(self)
-		BippyApp.mainScreenManager.add_widget(self.privateKeyScreen)
-		BippyApp.mainScreenManager.add_widget(self.resultsScreen)
+		NuBippyApp.mainScreenManager.add_widget(self.privateKeyScreen)
+		NuBippyApp.mainScreenManager.add_widget(self.resultsScreen)
 
-		self.root.add_widget(BippyApp.mainScreenManager)
+		self.root.add_widget(NuBippyApp.mainScreenManager)
 
 		return self.root
 
@@ -111,7 +112,7 @@ class NubippyApp(App):
 		"""
 			Read the info from the <language>.json file and set it as the info text
 		"""
-		self.infoText.text = BippyApp.get_string(info)
+		self.infoText.text = NuBippyApp.get_string(info)
 		return
 
 	def toggle_info(self):
@@ -169,5 +170,5 @@ class NubippyApp(App):
 		return return_string
 
 if __name__ == '__main__':
-	BippyApp = NubippyApp()
-	BippyApp.run()
+	NuBippyApp = NuBippyApp()
+	NuBippyApp.run()
