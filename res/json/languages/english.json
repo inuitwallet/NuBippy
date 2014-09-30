@@ -4,14 +4,13 @@
 	"Private_Key_Screen" : "Private Key",
 	"Private_Key_New_Key_Screen" : "New Private Key",
 	"Results_Screen" : "Results",
-
 	"Popup_Error" : "Error!",
 	"OK" : "OK",
 
 	"Encrypt" : "Encrypt",
 	"Decrypt" : "Decrypt",
 
-	"Bip_Successful" : "BIP0038 encryption was successful.\n\nYour encrypted private key and address are below.",
+	"Bip_Successful" : "BIP0038 encryption was successful.\n\nYour encrypted private key and NuBits and NuShares addresses are below.",
 	"Bip_Decrypt_Successful" : "BIP0038 Decryption was successful.\n\nYour decrypted, WIF format private key and address are below.",
 	"Bip_Decrypt_Unsuccessful" : "BIP0038 Decryption was unsuccessful.\n\nPlease try again to ensure you used the correct passphrase.",
 	"Bip_Key_Label" : "BIP0038 encrypted key",

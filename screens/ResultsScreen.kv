@@ -1,4 +1,15 @@
+<Widget>:
+	font_name:'res/fonts/Roboto-Regular.ttf'
+
 <ResultsScreen>:
+
+	canvas:
+		Color:
+			rgb: 0.13725, 0.12157, 0.12549
+		Rectangle:
+            pos: self.pos
+            size: self.size
+
 	name: 'Results'
 
 	BoxLayout:
@@ -36,6 +47,7 @@
 				width: 100
 				height: 30
 				pos: (40, 110)
+				color: (0.93725, 0.21176, 0.07843, 1)
 
 			TextInput:
 				id: middleField
@@ -51,6 +63,7 @@
 				width: 100
 				height: 30
 				pos: (40, 50)
+				color: (1, 0.72157, 0, 1)
 
 			TextInput:
 				id: bottomField

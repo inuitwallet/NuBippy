@@ -11,10 +11,10 @@ class PrivateKeyScreen(Screen):
 		Display the actions that work with private keys
 	"""
 
-	def __init__(self, BippyApp, **kwargs):
+	def __init__(self, NuBippyApp, **kwargs):
 		super(PrivateKeyScreen, self).__init__(**kwargs)
 
-		self.BippyApp = BippyApp
+		self.NuBippyApp = NuBippyApp
 
 		self.passphrase = StringProperty()
 		self.privateKey = StringProperty()
@@ -65,7 +65,7 @@ class PrivateKeyScreen(Screen):
 		self.mainLayoutEK.remove_widget(self.checkfieldEK)
 		self.mainLayoutEK.remove_widget(self.actionButtonEK)
 
-		self.BippyApp.set_info('Private Key')
+		self.NuBippyApp.set_info('Private Key')
 		return
 
 	def reset_ui(self, dt):
@@ -75,7 +75,7 @@ class PrivateKeyScreen(Screen):
 
 		#reset the New Key page
 		self.mainLayoutNK.clear_widgets()
-		self.mainLabelNK.text = self.BippyApp.get_string('New_Key_Intro_Text')
+		self.mainLabelNK.text = self.NuBippyApp.get_string('New_Key_Intro_Text')
 		self.mainLayoutNK.add_widget(self.mainLabelNK)
 		self.mainLayoutNK.add_widget(self.passfieldLabelNK)
 		self.passfieldNK.text = ''
@@ -88,7 +88,7 @@ class PrivateKeyScreen(Screen):
 
 		#reset the existing key page
 		self.mainLayoutEK.clear_widgets()
-		self.mainLabelEK.text = self.BippyApp.get_string('Existing_Key_Intro_Text')
+		self.mainLabelEK.text = self.NuBippyApp.get_string('Existing_Key_Intro_Text')
 		self.mainLayoutEK.add_widget(self.mainLabelEK)
 		self.mainLayoutEK.add_widget(self.privateKeyLabelEK)
 		self.privateKeyInputEK.text = ''
@@ -119,65 +119,65 @@ class PrivateKeyScreen(Screen):
 		isBip, comment = key.isBip(text)
 		if isBip is True:
 			if comment == 'badchecksum':
-				self.BippyApp.show_popup(self.BippyApp.get_string('Popup_Error'), self.BippyApp.get_string('Bip_Bad_Checksum'))
+				self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Popup_Error'), self.NuBippyApp.get_string('Bip_Bad_Checksum'))
 				self.privateKeyInputEK.text = ''
 				return
-			self.mainLabelEK.text = self.BippyApp.get_string('Bip_Key_Entered')
+			self.mainLabelEK.text = self.NuBippyApp.get_string('Bip_Key_Entered')
 			self.privateKey = text
 			self.privateKeyInputEK.text = ''
 			self.type = 'BIP'
 			self.passphrase_entry()
-			self.BippyApp.set_info('Bip_Key_Entered_Info')
+			self.NuBippyApp.set_info('Bip_Key_Entered_Info')
 			return
 		#check if it is a compressed or uncompressed WIF key
 		isWif, comment = key.isWif(text)
 		if isWif is True:
 			if comment == 'badchecksum':
-				self.BippyApp.show_popup(self.BippyApp.get_string('Popup_Error'), self.BippyApp.get_string('Wif_Bad_Checksum'))
+				self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Popup_Error'), self.NuBippyApp.get_string('Wif_Bad_Checksum'))
 				self.privateKeyInputEK.text = ''
 				return
 			if comment == 'compressed':
-				self.mainLabelEK.text = self.BippyApp.get_string('Compressed_Wif_Key_Entered')
+				self.mainLabelEK.text = self.NuBippyApp.get_string('Compressed_Wif_Key_Entered')
 				self.isCompressed = True
 			if comment == 'uncompressed':
-				self.mainLabelEK.text = self.BippyApp.get_string('Uncompressed_Wif_Key_Entered')
+				self.mainLabelEK.text = self.NuBippyApp.get_string('Uncompressed_Wif_Key_Entered')
 				self.isCompressed = False
 			self.privateKey = text
 			self.type = 'WIF'
 			self.passphrase_entry()
-			self.BippyApp.set_info('Valid_Key_Entered_Info')
+			self.NuBippyApp.set_info('Valid_Key_Entered_Info')
 			return
 		#check if it's a hex key
 		if key.isHex(text) is True:
-			self.mainLabelEK.text = self.BippyApp.get_string('Hex_Key_Entered')
+			self.mainLabelEK.text = self.NuBippyApp.get_string('Hex_Key_Entered')
 			self.privateKey = text
 			self.privateKeyInputEK.text = ''
 			self.type = 'HEX'
 			self.passphrase_entry()
-			self.BippyApp.set_info('Valid_Key_Entered_Info')
+			self.NuBippyApp.set_info('Valid_Key_Entered_Info')
 			return
 		#check if it's a base64 key
 		if key.isBase64(text) is True:
-			self.mainLabelEK.text = self.BippyApp.get_string('Base64_Key_Entered')
+			self.mainLabelEK.text = self.NuBippyApp.get_string('Base64_Key_Entered')
 			self.privateKey = text
 			self.privateKeyInputEK.text = ''
 			self.type = 'B64'
 			self.passphrase_entry()
-			self.BippyApp.set_info('Valid_Key_Entered_Info')
+			self.NuBippyApp.set_info('Valid_Key_Entered_Info')
 			return
 		#check if it's a base6 key
 		if key.isBase6(text) is True:
-			self.mainLabelEK.text = self.BippyApp.get_string('Base6_Key_Entered')
+			self.mainLabelEK.text = self.NuBippyApp.get_string('Base6_Key_Entered')
 			self.privateKey = text
 			self.privateKeyInputEK.text = ''
 			self.type = 'B6'
 			self.passphrase_entry()
-			self.BippyApp.set_info('Valid_Key_Entered_Info')
+			self.NuBippyApp.set_info('Valid_Key_Entered_Info')
 			return
 
 		#None of the above rules match so no key has been detected
 		self.type = False
-		self.BippyApp.show_popup(self.BippyApp.get_string('Popup_Error'), self.BippyApp.get_string('Not_Private_Key'))
+		self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Popup_Error'), self.NuBippyApp.get_string('Not_Private_Key'))
 		self.reset_ui(None)
 		return
 
@@ -202,9 +202,9 @@ class PrivateKeyScreen(Screen):
 			set the info text based on which accordion item is collapsed
 		"""
 		if self.newKeyAccordionItem.collapse is True and self.type is not False:
-			self.BippyApp.set_info('Private_Key_Screen_Info')
+			self.NuBippyApp.set_info('Private_Key_Screen_Info')
 		else:
-			self.BippyApp.set_info('Private_Key_New_Key_Screen_Info')
+			self.NuBippyApp.set_info('Private_Key_New_Key_Screen_Info')
 		return
 
 	def check_passphrase(self, passfield, checkfield, feedback, layout, button):
@@ -235,19 +235,19 @@ class PrivateKeyScreen(Screen):
 			feedback.text = ''
 			return
 		if 7 > len(passphrase) > 0:
-			feedback.color = (1,0,0,1)
-			feedback.text = self.BippyApp.get_string('Passphrase_Too_Short')
+			feedback.color = (0.93725, 0.21176, 0.07843, 1)
+			feedback.text = self.NuBippyApp.get_string('Passphrase_Too_Short')
 			return
 		elif passphrase != checktext:
-			feedback.color = (1,0.3,0,1)
-			feedback.text = self.BippyApp.get_string('Passphrases_Dont_Match')
+			feedback.color = (1, 0.72157, 0, 1)
+			feedback.text = self.NuBippyApp.get_string('Passphrases_Dont_Match')
 			return
 		else:
 			feedback.text = ''
 			if self.type == 'BIP':
-				button.text = self.BippyApp.get_string('Decrypt')
+				button.text = self.NuBippyApp.get_string('Decrypt')
 			else:
-				button.text = self.BippyApp.get_string('Encrypt')
+				button.text = self.NuBippyApp.get_string('Encrypt')
 			layout.add_widget(button)
 			self.passphrase = passphrase
 			return
@@ -269,7 +269,7 @@ class PrivateKeyScreen(Screen):
 
 		self.mainLayoutNK.add_widget(self.progressBarNK)
 		#Display instructions to the user
-		self.mainLabelNK.text = self.BippyApp.get_string('Entropy_Explanation')
+		self.mainLabelNK.text = self.NuBippyApp.get_string('Entropy_Explanation')
 		self.entropy = []
 		self.bind(on_touch_move=self.draw_entropy)
 
@@ -280,7 +280,7 @@ class PrivateKeyScreen(Screen):
 			This is the method by which entropy is gathered for generation of key pairs
 		"""
 		with self.canvas:
-			Color(0, 0.86667, 1)
+			Color(1, 0.72157, 0)
 			d = 5.
 			if self.collide_point(value.x, value.y):
 				Ellipse(pos=(value.x - d / 2, value.y - d / 2), size=(d, d), group='ellipses')
@@ -291,7 +291,7 @@ class PrivateKeyScreen(Screen):
 			self.progressBarNK.value = 0
 			self.mainLayoutNK.remove_widget(self.progressBarNK)
 			self.canvas.remove_group('ellipses')
-			self.mainLabelNK.text = self.BippyApp.get_string('Enough_Entropy')
+			self.mainLabelNK.text = self.NuBippyApp.get_string('Enough_Entropy')
 			self.mainLayoutNK.add_widget(self.encryptButtonNK)
 			self.newKey = True
 			self.type = 'New'
@@ -305,9 +305,9 @@ class PrivateKeyScreen(Screen):
 		#remove widgets and alert the user to the fact that BIP0038 encryption is starting
 		layout.clear_widgets()
 		if self.type == 'BIP':
-			label.text = self.BippyApp.get_string('Starting_Decryption')
+			label.text = self.NuBippyApp.get_string('Starting_Decryption')
 		else:
-			label.text = self.BippyApp.get_string('Starting_Bip')
+			label.text = self.NuBippyApp.get_string('Starting_Bip')
 		layout.add_widget(label)
 
 		#use clock to delay the start of the encryption otherwise the message above is never shown
@@ -326,7 +326,7 @@ class PrivateKeyScreen(Screen):
 		else:
 			#otherwise, we encrypt the existing key
 			BIP, bAddress, sAddress = gen.encBIPKey(self.privateKey, self.passphrase)
-		resultsScreen = self.BippyApp.mainScreenManager.get_screen('Results')
+		resultsScreen = self.NuBippyApp.mainScreenManager.get_screen('Results')
 		resultsScreen.display_bip(BIP, bAddress, sAddress)
 		#clear the UI
 		Clock.schedule_once(self.reset_ui, 5)
@@ -337,7 +337,7 @@ class PrivateKeyScreen(Screen):
 			Perform the decryption using the saved details
 		"""
 		WIF, bAddress, sAddress = gen.decBIPKey(self.privateKey, self.passphrase)
-		resultsScreen = self.BippyApp.mainScreenManager.get_screen('Results')
+		resultsScreen = self.NuBippyApp.mainScreenManager.get_screen('Results')
 		resultsScreen.display_wif(WIF, bAddress, sAddress)
 		#clear the UI
 		Clock.schedule_once(self.reset_ui, 5)

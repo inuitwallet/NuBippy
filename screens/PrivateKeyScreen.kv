@@ -1,4 +1,15 @@
+<Widget>:
+	font_name:'res/fonts/Roboto-Regular.ttf'
+
 <PrivateKeyScreen>:
+
+	canvas:
+		Color:
+			rgb: 0.13725, 0.12157, 0.12549
+		Rectangle:
+            pos: self.pos
+            size: self.size
+
 	name: 'Private Key'
 
 	BoxLayout:
@@ -11,6 +22,7 @@
 			AccordionItem:
 				id: newKeyAccordionItem
 				title: app.get_string('New_Key')
+				background_selected: 'res/images/branding/blue.png'
 				on_touch_up:
 					root.set_screen()
 
@@ -97,11 +109,15 @@
 						max: 800
 						pos: (70, 100)
 						disabled: True
+						canvas:
+							Color:
+								rgb: 0.93725, 0.21176, 0.07843
 
 
 			AccordionItem:
 				id: existingKeyAccordionItem
 				title: app.get_string('Existing_Key')
+				background_selected: 'res/images/branding/blue.png'
 				on_touch_down:
 					root.set_screen()
 

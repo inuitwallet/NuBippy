@@ -1,4 +1,8 @@
+<Widget>:
+	font_name:'res/fonts/Roboto-Medium.ttf'
+
 <TopActionBar>:
+
 	id: topActionBar
 
 	ActionView:
@@ -7,11 +11,8 @@
 	    ActionPrevious:
 	        id: topActionPrevious
 	        with_previous: True
-	        app_icon: 'res/icons/nubits.png'
+	        app_icon: 'res/icons/nu.png'
 	        title: app.get_string('Main_Title')
 	        on_release: root.reset_ui()
+	        background_down: 'res/images/branding/red.png'
 
-	    #ActionToggleButton:
-	    #    id: topInfoButton
-	    #    icon: 'res/icons/info.png'
-	    #    on_release: app.toggle_info()

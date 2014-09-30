@@ -7,9 +7,9 @@ class ResultsScreen(Screen):
 		The screen that displays the results to the user
 	"""
 
-	def __init__(self, BippyApp, **kwargs):
+	def __init__(self, NuBippyApp, **kwargs):
 		super(ResultsScreen, self).__init__(**kwargs)
-		self.BippyApp = BippyApp
+		self.NuBippyApp = NuBippyApp
 
 		self.mainLayout = self.ids.mainLayout.__self__
 		self.mainLabel = self.ids.mainLabel.__self__
@@ -25,8 +25,8 @@ class ResultsScreen(Screen):
 		"""
 			switch to the results screen
 		"""
-		self.BippyApp.mainScreenManager.transition = SlideTransition(direction='right')
-		self.BippyApp.mainScreenManager.current = self.BippyApp.get_string('Results_Screen')
+		self.NuBippyApp.mainScreenManager.transition = SlideTransition(direction='right')
+		self.NuBippyApp.mainScreenManager.current = self.NuBippyApp.get_string('Results_Screen')
 		return
 
 	def display_bip(self, BIP, bAddress, sAddress):
@@ -44,12 +44,12 @@ class ResultsScreen(Screen):
 
 		Clock.schedule_once(self.switch_to_results, 0.5)
 
-		self.mainLabel.text = self.BippyApp.get_string('Bip_Successful')
-		self.topLabel.text = self.BippyApp.get_string('Bip_Key_Label')
+		self.mainLabel.text = self.NuBippyApp.get_string('Bip_Successful')
+		self.topLabel.text = self.NuBippyApp.get_string('Bip_Key_Label')
 		self.topField.text = str(BIP)
-		self.middleLabel.text = self.BippyApp.get_string('NuBits_Address_Label')
+		self.middleLabel.text = self.NuBippyApp.get_string('NuBits_Address_Label')
 		self.middleField.text = str(bAddress)
-		self.bottomLabel.text = self.BippyApp.get_string('NuShares_Address_Label')
+		self.bottomLabel.text = self.NuBippyApp.get_string('NuShares_Address_Label')
 		self.bottomField.text = str(sAddress)
 		self.canvas.ask_update()
 		return
@@ -62,7 +62,7 @@ class ResultsScreen(Screen):
 		self.mainLayout.add_widget(self.mainLabel)
 
 		if WIF is False or bAddress is False or sAddress is False:
-			self.mainLabel.text = self.BippyApp.get_string('Bip_Decrypt_Unsuccessful')
+			self.mainLabel.text = self.NuBippyApp.get_string('Bip_Decrypt_Unsuccessful')
 			return
 
 		self.mainLayout.add_widget(self.topLabel)
@@ -74,12 +74,12 @@ class ResultsScreen(Screen):
 
 		Clock.schedule_once(self.switch_to_results, 0.5)
 
-		self.mainLabel.text = self.BippyApp.get_string('Bip_Decrypt_Successful')
-		self.topLabel.text = self.BippyApp.get_string('Wif_Key_Label')
+		self.mainLabel.text = self.NuBippyApp.get_string('Bip_Decrypt_Successful')
+		self.topLabel.text = self.NuBippyApp.get_string('Wif_Key_Label')
 		self.topField.text = str(WIF)
-		self.middleLabel.text = self.BippyApp.get_string('NuBits_Address_Label')
+		self.middleLabel.text = self.NuBippyApp.get_string('NuBits_Address_Label')
 		self.middleField.text = str(bAddress)
-		self.bottomLabel.text = self.BippyApp.get_string('NuShares_Address_Label')
+		self.bottomLabel.text = self.NuBippyApp.get_string('NuShares_Address_Label')
 		self.bottomField.text = str(sAddress)
 		self.canvas.ask_update()
 		return
