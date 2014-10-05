@@ -1,4 +1,3 @@
-import imp
 import platform
 import sys
 
