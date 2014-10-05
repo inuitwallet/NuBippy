@@ -2,13 +2,13 @@ import hashlib
 import num.elip as elip
 import num.enc as enc
 
-def privateKey2Wif(privateKey):
+def privateKey2Wif(privateKey, compressed=True):
 	"""
 		Return private key in compressed WIF format
 	"""
-	return base58Encode(enc.encode(privateKey, 256, 32) + '\x01', (128 + 63), 'B')
+	return base58Encode(enc.encode(privateKey, 256, 32) + '\x01', 191, 'B')
 
-def privateKey2PublicKey(priv):
+def privateKey2PublicKey(priv, compressed=True):
 	"""
 		integer 256 bit ECC private key to hexstring compressed public key
 	"""

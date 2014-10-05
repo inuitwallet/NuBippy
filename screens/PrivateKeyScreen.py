@@ -24,6 +24,8 @@ class PrivateKeyScreen(Screen):
 		self.isBip = BooleanProperty(False)
 		self.type = False
 
+		self.prog_string = None
+
 		#Link to the widgets
 		#New Key page
 		self.mainLayoutNK = self.ids.mainLayoutNK.__self__
@@ -185,7 +187,6 @@ class PrivateKeyScreen(Screen):
 		"""
 			set up the UI ready for passphrase entry
 		"""
-
 		self.mainLayoutEK.remove_widget(self.privateKeyLabelEK)
 		self.mainLayoutEK.remove_widget(self.privateKeyInputEK)
 		self.mainLayoutEK.remove_widget(self.submitButtonEK)
@@ -222,11 +223,11 @@ class PrivateKeyScreen(Screen):
 		#check for tabs in the passphrase or check string.
 		#tabs don't do anything as standard so we check for them and move the focus accordingly
 		if '\t' in passphrase:
-			passfield.text = passphrase.replace('\t','')
+			passfield.text = passphrase.replace('\t', '')
 			checkfield.focus = True
 			return
 		if '\t' in checktext:
-			checkfield.text = checktext.replace('\t','')
+			checkfield.text = checktext.replace('\t', '')
 			passfield.focus = True
 			return
 
@@ -328,6 +329,7 @@ class PrivateKeyScreen(Screen):
 			BIP, bAddress, sAddress = gen.encBIPKey(self.privateKey, self.passphrase)
 		resultsScreen = self.NuBippyApp.mainScreenManager.get_screen('Results')
 		resultsScreen.display_bip(BIP, bAddress, sAddress)
+
 		#clear the UI
 		Clock.schedule_once(self.reset_ui, 5)
 		return

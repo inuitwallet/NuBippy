@@ -26,10 +26,11 @@ from kivy.uix.popup import Popup
 from kivy.lang import Builder
 
 import json
-import random
 
+import screens.HomeScreen as HomeScreen
 import screens.PrivateKeyScreen as PrivateKeyScreen
 import screens.ResultsScreen as ResultsScreen
+import screens.VanityScreen as VanityScreen
 
 
 class TopActionBar(ActionBar):
@@ -39,6 +40,62 @@ class TopActionBar(ActionBar):
 
 	def __init__(self, **kwargs):
 		super(TopActionBar, self).__init__(**kwargs)
+		self.topActionPrevious = self.ids.topActionPrevious.__self__
+		self.actionSpinner = self.ids.actionSpinner.__self__
+		self.currencySpinner = self.ids.currencySpinner.__self__
+		return
+
+	def switch_screen(self, screen):
+		"""
+			This method is fired whenever the actionswitcher is pressed
+			It's job is to set the current screen in the screen manager and set the status of the top action bar
+		"""
+		#When we reset the function bar text as it fires this routine.
+		#catch that here
+		if screen == NuBippyApp.get_string('Action_Title'):
+			return
+
+		#set the state of the top bar according to the screen that has been requested
+		self.ids.topActionPrevious.with_previous = False if screen == NuBippyApp.get_string('Home_Screen') else True
+
+		#currencies are not important to Private Key encryption so disable the currency spinner
+		if screen == NuBippyApp.get_string('Vanity_Screen'):
+			self.set_currency(NuBippyApp.get_string('Nubits'))
+			self.currencySpinner.disabled = False
+		else:
+			self.set_currency(NuBippyApp.get_string('No_Currency_Selected'))
+			self.currencySpinner.disabled = True
+
+		#the Action spinner always shows the choose action instruction
+		self.ids.actionSpinner.text = NuBippyApp.get_string('Action_Title')
+
+		#set the screen
+		NuBippyApp.mainScreenManager.current = screen
+
+		#set the title based on the chosen screen
+		self.topActionPrevious.title = NuBippyApp.get_string('Main_Title') + ' - ' + screen if screen != NuBippyApp.get_string('Home_Screen') else NuBippyApp.get_string('Main_Title')
+
+		#set which widget has focus based on the screen that is chosen
+		if screen == NuBippyApp.get_string('Private_Key_Screen'):
+			if NuBippyApp.privateKeyScreen.newKeyAccordionItem.collapse is True:
+				NuBippyApp.privateKeyScreen.privateKeyInputEK.focus = True
+			else:
+				NuBippyApp.privateKeyScreen.passfieldNK.focus = True
+		if screen == NuBippyApp.get_string('Vanity_Screen'):
+			pass
+		return
+
+	def set_currency(self, currencyLongName):
+		"""
+			This is fired when a currency is chosen in the dropdown
+		"""
+		if currencyLongName == NuBippyApp.get_string('No_Currency_Selected'):
+			NuBippyApp.chosenCurrency = ''
+			self.topActionPrevious.app_icon = 'res/icons/nu.png'
+			return
+		NuBippyApp.chosenCurrency = currencyLongName
+		self.topActionPrevious.app_icon = 'res/icons/' + NuBippyApp.chosenCurrency.lower() + '.png'
+		self.currencySpinner.text = currencyLongName
 		return
 
 	def reset_ui(self):
@@ -46,7 +103,8 @@ class TopActionBar(ActionBar):
 			clear all input text from ui
 		"""
 		NuBippyApp.mainScreenManager.transition = SlideTransition(direction='left')
-		NuBippyApp.mainScreenManager.current = NuBippyApp.get_string('Private_Key_Screen')
+		self.topActionPrevious.title = NuBippyApp.get_string('Main_Title')
+		self.switch_screen(NuBippyApp.get_string('Home_Screen'))
 		NuBippyApp.reset_ui()
 		return
 
@@ -97,11 +155,18 @@ class NuBippyApp(App):
 		self.root.add_widget(self.infoScrollView)
 
 		#Add the screenManager
+		Builder.load_file('screens/HomeScreen.kv')
+		self.homeScreen = HomeScreen.HomeScreen(self)
 		Builder.load_file('screens/PrivateKeyScreen.kv')
 		self.privateKeyScreen = PrivateKeyScreen.PrivateKeyScreen(self)
+		Builder.load_file('screens/VanityScreen.kv')
+		self.vanityScreen = VanityScreen.VanityScreen(self)
 		Builder.load_file('screens/ResultsScreen.kv')
 		self.resultsScreen = ResultsScreen.ResultsScreen(self)
+
+		NuBippyApp.mainScreenManager.add_widget(self.homeScreen)
 		NuBippyApp.mainScreenManager.add_widget(self.privateKeyScreen)
+		NuBippyApp.mainScreenManager.add_widget(self.vanityScreen)
 		NuBippyApp.mainScreenManager.add_widget(self.resultsScreen)
 
 		self.root.add_widget(NuBippyApp.mainScreenManager)
@@ -128,12 +193,21 @@ class NuBippyApp(App):
 		Animation(height=height, d=.3, t='out_quart').start(self.infoScrollView)
 		self.topActionBar.infoButton.state = 'normal'
 
+	def get_currency_code(self, currencyLongName):
+		"""
+			For the given currency long name return the currency abbreviation
+		"""
+		for cur in self.currencies:
+			if cur['longName'] == currencyLongName:
+				return cur['currency']
+
 	def reset_ui(self):
 		"""
 			reset the UI to it's original state
 			this is called when the home screen is selected
 		"""
 		self.privateKeyScreen.reset_ui(None)
+		self.vanityScreen.reset_ui(None)
 		return
 
 	def show_popup(self, title, text):

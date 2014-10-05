@@ -19,6 +19,9 @@ class ResultsScreen(Screen):
 		self.middleField = self.ids.middleField.__self__
 		self.bottomLabel = self.ids.bottomLabel.__self__
 		self.bottomField = self.ids.bottomField.__self__
+
+		self.addressLabel = self.ids.addressLabel.__self__
+		self.addressField = self.ids.addressField.__self__
 		return
 
 	def switch_to_results(self, dt):
@@ -81,6 +84,33 @@ class ResultsScreen(Screen):
 		self.middleField.text = str(bAddress)
 		self.bottomLabel.text = self.NuBippyApp.get_string('NuShares_Address_Label')
 		self.bottomField.text = str(sAddress)
+		self.canvas.ask_update()
+		return
+
+	def display_wif_vanity(self, WIF, address):
+		"""
+			display the Wif and address from a vanity generation
+		"""
+		self.mainLayout.clear_widgets()
+		self.mainLayout.add_widget(self.mainLabel)
+
+		self.mainLayout.add_widget(self.topLabel)
+		self.mainLayout.add_widget(self.topField)
+		self.mainLayout.add_widget(self.addressLabel)
+		self.mainLayout.add_widget(self.addressField)
+
+		Clock.schedule_once(self.switch_to_results, 0.5)
+
+		self.mainLabel.text = self.NuBippyApp.get_string('Vanity_Wif_Text')
+		self.topLabel.text = self.NuBippyApp.get_string('Wif_Key_Label')
+		self.topField.text = str(WIF)
+		if self.NuBippyApp.chosenCurrency == 'NuBits':
+			self.addressLabel.text = self.NuBippyApp.get_string('NuBits_Address_Label')
+			self.addressLabel.color = (1, 0.72157, 0, 1)
+		else:
+			self.addressLabel.text = self.NuBippyApp.get_string('NuShares_Address_Label')
+			self.addressLabel.color = (0.93725, 0.21176, 0.07843, 1)
+		self.addressField.text = str(address)
 		self.canvas.ask_update()
 		return
 		
