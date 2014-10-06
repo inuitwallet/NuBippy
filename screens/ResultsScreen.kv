@@ -10,7 +10,7 @@
             pos: self.pos
             size: self.size
 
-	name: 'Results'
+	name: app.get_string('Results_Screen')
 
 	BoxLayout:
 		orientation: 'horizontal'
@@ -40,6 +40,8 @@
 				height: 30
 				pos: (180, 170)
 				multiline: False
+				readonly: True
+				allow_copy: True
 
 			Label:
 				id: middleLabel
@@ -56,6 +58,8 @@
 				height: 30
 				pos: (180, 110)
 				multiline: False
+				readonly: True
+				allow_copy: True
 
 			Label:
 				id: addressLabel
@@ -71,6 +75,8 @@
 				height: 30
 				pos: (180, 80)
 				multiline: False
+				readonly: True
+				allow_copy: True
 
 			Label:
 				id: bottomLabel
@@ -87,6 +93,8 @@
 				height: 30
 				pos: (180, 50)
 				multiline: False
+				readonly: True
+				allow_copy: True
 
 
 		AsyncImage:
