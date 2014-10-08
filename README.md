@@ -1,21 +1,28 @@
-#NuNuBippy 
-###fast and easy BIP0038 encryption for Nubits and NuShares
+#NuBippy 
+###fast and easy BIP0038 encryption and vanity addresses for NuBits and NuShares
 
-Keeping private keys is inherently unsafe. 
-If a third party has access to your private key, they have access to all of your bits or shares. 
-BIP0038 encryption adds a layer of security to your private key by protecting it with a passphrase. 
-A BIP0038 encrypted private key is useless without the passphrase, but with the passphrase it still gives you control of your coins.
+NuBippy is a port of Bippy [https://github.com/inuitwallet/bippy] specifically for NuBits and NuShares [https://nubits.com/]
 
-NuNuBippy is a tool for quickly and securely generating BIP0038 encrypted keys for NuBits and NuShares.
+NuBippy is able to generate valid NuBit and NuShare private keys and addresses. It uses a customised BIP0038 encryption method [https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki] to add passphrase protected encryption to the private keys. Using a customised version of vanitygen [https://github.com/inuitwallet/vanitygen], Nubippy is able to generate vanity addresses for NuBits or NuShares and offer optional BIP0038 style encryption on those private keys too.
 
-   - NuBippy can generate new private keys or encrypt existing keys.
-   - NuBippy has a simple user interface with helpful instructions to make the encryption process easier.
-   - NuBippy does not need an internet connection so private key generation and encryption can be kept secure.
-   - NuBippy aims to be cross-platform on modern operating system, open source, and free.
-   - Nothing is stored on your machine so if NuBippy is used offline, you can be confident in the security of your generated private key
-   
-#Running NuBippy
+###Installing NuBippy
 
-you will need Python 2.7 installed
+Nubippy is built using Python 2.7 [https://www.python.org/downloads/] and Kivy [http://kivy.org/#download]. 
+Both will need to be installed on your computer before Nubippy will run. There are good instructions for installing both Python and Kivy on their respective websites. 
 
-clone this repository then run nubippy.py
+On Windows Kivy comes as a portable application. It can be a bit of a faff to get it working first time but the instructions on the Kivy site are clearer than I can manage here.
+I intend to build some binary versions of NuBippy in the near future which should make this step unneccessary. I will update this README when that happens.
+
+###Runing NuBippy
+
+Once you have Python and Kivy installed simply clone this repository and run the NuBippy.py file
+The command used differs on different OSes. On Linux you use 'python NuBippy.py'. On Mac you use 'kivy NuBippy.py'. On windows you have to go through the procedure laid out on the Kivy website. 
+Again, once I have compiled some executable versions, this will be unneccessary.
+
+###Using NuBippy
+
+
+
+
+
+
