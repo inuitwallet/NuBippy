@@ -1,21 +1,73 @@
-#NuNuBippy 
-###fast and easy BIP0038 encryption for Nubits and NuShares
+#NuBippy 
+###fast and easy BIP0038 encryption and vanity addresses for NuBits and NuShares
 
-Keeping private keys is inherently unsafe. 
-If a third party has access to your private key, they have access to all of your bits or shares. 
-BIP0038 encryption adds a layer of security to your private key by protecting it with a passphrase. 
-A BIP0038 encrypted private key is useless without the passphrase, but with the passphrase it still gives you control of your coins.
+NuBippy is a port of Bippy [https://github.com/inuitwallet/bippy] specifically for NuBits and NuShares [https://nubits.com/]
 
-NuNuBippy is a tool for quickly and securely generating BIP0038 encrypted keys for NuBits and NuShares.
+NuBippy is able to generate valid NuBit and NuShare private keys and addresses. It uses a customised BIP0038 encryption method [https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki] to add passphrase protected encryption to the private keys. Using a customised version of vanitygen [https://github.com/inuitwallet/vanitygen], NuBippy is able to generate vanity addresses for NuBits or NuShares and offer optional BIP0038 style encryption on those private keys too.
 
-   - NuBippy can generate new private keys or encrypt existing keys.
-   - NuBippy has a simple user interface with helpful instructions to make the encryption process easier.
-   - NuBippy does not need an internet connection so private key generation and encryption can be kept secure.
-   - NuBippy aims to be cross-platform on modern operating system, open source, and free.
-   - Nothing is stored on your machine so if NuBippy is used offline, you can be confident in the security of your generated private key
-   
-#Running NuBippy
+###Installing NuBippy
 
-you will need Python 2.7 installed
+NuBippy is built using Python 2.7 [https://www.python.org/downloads/] and Kivy [http://kivy.org/#download]. 
+Both will need to be installed on your computer before NuBippy will run. There are good instructions for installing both Python and Kivy on their respective websites. 
 
-clone this repository then run nubippy.py
+On Windows Kivy comes as a portable application. It can be a bit of a faff to get it working first time but the instructions on the Kivy site are clearer than I can manage here.
+I intend to build some binary versions of NuBippy in the near future which should make this step unnecessary. I will update this README when that happens.
+
+###Running NuBippy
+
+Once you have Python and Kivy installed simply clone this repository and run the NuBippy.py file
+The command used differs on different OSes. On Linux you use 'python NuBippy.py'. On Mac you use 'kivy NuBippy.py'. On windows you have to go through the procedure laid out on the Kivy website. 
+Again, once I have compiled some executable versions, this will be unnecessary.
+
+NuBippy can be used totally offline. It also has no cache (unlike a web browser) so the keys it generates can be considered 'cold'.
+
+###Using NuBippy
+
+NuBippy is intended to be simple and to have an obvious workflow. There are instructions given on every action so it should be fairly self explanitory. 
+You can choose what action you want to undertake byt selecting from the 'Action' drop down menu on the top bar.
+When generating a vanity address, you need to choose either NuBits or NuShares as your currency (default is NuBits). this is done from the second dropdown on the top bar which is only active on the Vanity Address screen. 
+To generate a vanity address, just enter the text you want to search for. Don't enter the standard prefix for Nubits ('B') or NuShares ('S') as NuBippy adds these automatically.
+
+If at any point you want to stop the Action and return to the home screen, press the main NuBippy logo on the far left of the top bar. This will reset all the screens and remove any data that has been entered or generated
+
+###The science bit
+
+####BIP0038
+
+The BIP0038 encryption method had to be modified slightly to work with NuBits and NuShares. Each valid private key can be used to hash an address for both NuBits and NuShares. The first step of the BIP0038 method is to generate an 'addresshash' which is added to the encrypted private key output. This is used to verify that the correct private key has been obtained when decryption happens. 
+To avoid confusion as to which address to use I decided to concatenate both possible addresses together:
+
+addresshash = sha256(sha256(NuBits_address + Nushares_Address))[:4]
+
+Aside from that change, the BIP0038 method remians the same.
+
+####Vanitygen
+
+The vanitygen binary used by NuBippy has been modified to always generate compressed private and public keys. this keeps it inline with the rest of the private nad public keys NuBippy is able to create.
+It has also been modified to accept two version numbers when a different version is specified. This allows for Nubit addresses to be generated which have a different version number to their corresponding private key.
+
+####Entropy
+
+When generating private keys internally, NuBippy uses three different sources of Entropy. The most obvious is the user entered entropy which is collected when you draw dots over NuBippy with your mouse. This is combined with clock based and urandom based entropy to generate random private keys for better security.
+
+
+###Known Issues
+
+The issues at the moment are to do with the compiling of the binaries that NuBippy needs to run. The two it uses are scrypt (fopr BIp0038 encryption) and vanitygen 9for vanity address generation).
+Nubippy currently has scrypt binaries for:
+Linux (64 bit)
+Linux (32 bit)
+OSX (64 bit)
+Windows (32 bit)
+
+and vanitygen binaries for:
+Linux (64 bit)
+
+If you are able to compile vanitygen or scrypt for platforms not mentioned, please do so and share the binary with me. Thanks :)
+
+
+
+
+
+
+
