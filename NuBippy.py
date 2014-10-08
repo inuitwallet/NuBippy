@@ -6,10 +6,12 @@
 	Written by the creator of inuit (http://inuit-wallet.co.uk)
 """
 
-from kivy.config import Config
+from kivy.config import Config, ConfigParser
 Config.set('graphics', 'width', '1000')
 Config.set('graphics', 'height', '400')
 Config.set('graphics', 'resizable', '0')
+Config.set('graphics', 'fullscreen', '0')
+Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -22,7 +24,6 @@ from kivy.animation import Animation
 from kivy.uix.actionbar import ActionBar
 from kivy.uix.screenmanager import SlideTransition
 from kivy.uix.popup import Popup
-
 from kivy.lang import Builder
 
 import json
@@ -114,25 +115,32 @@ class NuBippyApp(App):
 		The application Class for Bippy
 	"""
 
-	#Set the language and load the language file
-	language = 'english'
-	try:
-		lang = json.load(open('res/json/languages/' + language + '.json', 'r'))
-	except ValueError as e:
-		print('')
-		print('##################################################################')
-		print('')
-		print('There was an Error loading the ' + language + ' language file.')
-		print('')
-		print(str(e))
-		print('')
-		print('##################################################################')
-		raise SystemExit
-
 	def __init__(self, **kwargs):
 		super(NuBippyApp, self).__init__(**kwargs)
 		self.isPopup = False
 		self.show_info = False
+
+		self.use_kivy_settings = False
+
+		#load config file
+		#we don't display the settings panel, changes can be made manually to the ini file
+		self.config = ConfigParser()
+		self.config.read('nubippy.ini')
+
+		#Set the language and load the language file
+		self.language = self.config.get('Language', 'active_language')
+		try:
+			self.lang = json.load(open('res/json/languages/' + self.language + '.json', 'r'))
+		except ValueError as e:
+			print('')
+			print('##################################################################')
+			print('')
+			print('There was an Error loading the ' + self.language + ' language file.')
+			print('')
+			print(str(e))
+			print('')
+			print('##################################################################')
+			raise SystemExit
 		return
 
 	def build(self):
@@ -242,6 +250,13 @@ class NuBippyApp(App):
 		except (ValueError, KeyError):
 			return_string = 'Language Error'
 		return return_string
+
+	def open_settings(*args):
+		"""
+			override to disable F1 settings panel
+		"""
+		pass
+
 
 if __name__ == '__main__':
 	NuBippyApp = NuBippyApp()
