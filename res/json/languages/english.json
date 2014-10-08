@@ -61,7 +61,7 @@
 	"Nushare_Address" : "NuShare Address",
 	"Nushares" : "NuShares",
 
-	"Vanity_Intro_Text" : "This action will allow you to generate a vanity address for NuBits or NuShares.\n\nPlease make sure you have selected either Nubits or Nushares in the dropdown on the top bar\nand then enter your vanity text in the box below.",
+	"Vanity_Intro_Text" : "This action will allow you to generate a vanity address for NuBits or NuShares.\n\nPlease make sure you have selected either Nubits or Nushares in the dropdown on the top bar\nand then enter your vanity text in the box below.\n\nUse the 'case insensitive' and 'regex' options to speed up longer searches",
 	"Vanity_Text" : "Vanity Text",
 	"Vanity_Run_Error" : "There was an error running vanitygen.\n\nTry again or report this issue.",
 
@@ -73,6 +73,8 @@
 	"System_Info_6" : "\nAt this rate you have a ",
 	"System_Info_7" : "% chance of finding your vanity address within ",
 	"System_Info_8" : ".\n\nDo you want to continue the search?",
+
+	"Regex_Search_Info" : "You have chosen to perform a Regex Search.\n\nIt is not possible to give an estimate on how long your search may take\nbut it could be a long time.\n\nDo you want to continue?",
 
 	"Display_Vanity_1" : "NuBippy has found the vanity address\n",
 	"Display_Vanity_2" : ".\n\nWould you like to BIP0038 encrypt the private key?",
@@ -88,6 +90,9 @@
 
 	"Warning" : "Warning",
 	"Case_Sensitivity_Warning" : "Your vanity text would make your public address invalid.\nNuBippy will search without honouring upper and lower case instead.",
-	"Regex_Warning" : "Your vanity text would make your public address invalid.\nNuBippy will search using the text as a regular expression instead."
+	"Regex_Warning" : "Your vanity text would make your public address invalid.\nNuBippy will search using the text as a regular expression instead.",
+
+	"Case_Insensitive_Search" : "Case Insensitive",
+	"Regex_Search" : "Regex"
 
 }

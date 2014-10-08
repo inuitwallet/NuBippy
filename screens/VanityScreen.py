@@ -28,6 +28,11 @@ class VanityScreen(Screen):
 		self.vanityInput = self.ids.vanityInput.__self__
 		self.submitButton = self.ids.submitButton.__self__
 
+		self.caseLabel = self.ids.caseLabel.__self__
+		self.caseCheck = self.ids.caseCheck.__self__
+		self.regexLabel = self.ids.regexLabel.__self__
+		self.regexCheck = self.ids.regexCheck.__self__
+
 		self.abortButton = self.ids.abortButton.__self__
 
 		self.yesButtonInfo = self.ids.yesButtonInfo.__self__
@@ -54,6 +59,12 @@ class VanityScreen(Screen):
 		self.vanityInput.text = ''
 		self.mainLayout.add_widget(self.vanityInput)
 		self.mainLayout.add_widget(self.submitButton)
+		self.mainLayout.add_widget(self.caseLabel)
+		self.caseCheck.active = False
+		self.mainLayout.add_widget(self.caseCheck)
+		#self.mainLayout.add_widget(self.regexLabel)
+		self.regexCheck.active = False
+		#self.mainLayout.add_widget(self.regexCheck)
 
 		self.passfield.text =''
 		self.checkfield.text = ''
@@ -67,7 +78,7 @@ class VanityScreen(Screen):
 
 	def submit_vanity(self, vanity, command=''):
 		"""
-			submit the vanity text and pass it to vanitygen_linux_64 for a test run
+			submit the vanity text and pass it to vanitygen for a test run
 
 			we simulate a full run. This will give us the difficulty and the first three system info outputs
 			if the vanity is very easy we may get the address and private key in the output of the simulation
@@ -96,6 +107,12 @@ class VanityScreen(Screen):
 				else:
 					self.command = ['./res/vanitygen/vanitygen_mac']
 
+			if self.caseCheck.active is True:
+				self.command.append('-i')
+
+			if self.regexCheck.active is True:
+				self.command.append('-r')
+
 			if self.NuBippyApp.chosenCurrency == 'NuBits':
 				self.command.append('-X 25#191')
 				self.command.append('-n')
@@ -122,11 +139,11 @@ class VanityScreen(Screen):
 				self.submit_vanity(self.vanity, self.command)
 				self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Warning'), self.NuBippyApp.get_string('Case_Sensitivity_Warning'))
 				return
-			if '-r' not in self.command:
-				self.command.append('-r')
-				self.submit_vanity(self.vanity, self.command)
-				self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Warning'), self.NuBippyApp.get_string('Regex_Warning'))
-				return
+			#if '-r' not in self.command:
+			#	self.command.append('-r')
+			#	self.submit_vanity(self.vanity, self.command)
+			#	self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Warning'), self.NuBippyApp.get_string('Regex_Warning'))
+			#	return
 			#if we get here, none of the above worked so show the error
 			self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Popup_Error'), error)
 			return
@@ -156,44 +173,48 @@ class VanityScreen(Screen):
 
 	def display_system_info(self, values):
 		"""
-			show the system information from the vanitygen_linux_64 simulation process to the user
+			show the system information from the vanitygen simulation process to the user
 		"""
 		val = values.split('\n')
-		#first row is difficulty
-		difficulty = val[0].split(':')[1].strip()
-		#next three lines are system info
-		#we are only really interested in the last two though as the first never seems to give the correct estimates
-		#send that necessary data to the function for parsing
-		rate, time, percentage = self.get_system_info(val[2], val[3])
+		#first row is difficulty as long as not a regex search
+		if '-r' in self.command:
+			output = self.NuBippyApp.get_string('Regex_Search_Info')
+		else:
+			difficulty = val[0].split(':')[1].strip()
+			#next three lines are system info
+			#we are only really interested in the last two though as the first never seems to give the correct estimates
+			#send that necessary data to the function for parsing
+			rate, time, percentage = self.get_system_info(val[2], val[3])
 
-		#unit conversion of rate and time
-		rate_unit = 'keys/sec'
-		if rate > 1000:
-			rate = (rate / 1000)
-			rate_unit = 'Kkeys/sec'
-		if rate > 1000:
-			rate = (rate / 1000)
-			rate_unit = 'Mkeys/sec'
+			#unit conversion of rate and time
+			rate_unit = 'keys/sec'
+			if rate > 1000:
+				rate = (rate / 1000)
+				rate_unit = 'Kkeys/sec'
+			if rate > 1000:
+				rate = (rate / 1000)
+				rate_unit = 'Mkeys/sec'
 
-		time_unit = 'seconds'
-		if time > 60:
-			time = (time / 60)
-			time_unit = 'minutes'
-		if time > 60:
-			time = (time / 60)
-			time_unit = 'hours'
-		if time > 24:
-			time = (time / 24)
-			time_unit = 'days'
-		if time > 365:
-			time = (time / 365)
-			time_unit = 'years'
+			time_unit = 'seconds'
+			if time > 60:
+				time = (time / 60)
+				time_unit = 'minutes'
+			if time > 60:
+				time = (time / 60)
+				time_unit = 'hours'
+			if time > 24:
+				time = (time / 24)
+				time_unit = 'days'
+			if time > 365:
+				time = (time / 365)
+				time_unit = 'years'
 
-		output = self.NuBippyApp.get_string('System_Info_1') + self.NuBippyApp.chosenCurrency + self.NuBippyApp.get_string('System_Info_2') + self.vanity \
-		         + self.NuBippyApp.get_string('System_Info_3') + difficulty + self.NuBippyApp.get_string('System_Info_4') \
-		         + self.NuBippyApp.get_string('System_Info_5') + str(rate) + ' ' + rate_unit + '.' \
-		         + self.NuBippyApp.get_string('System_Info_6') + str(percentage) + self.NuBippyApp.get_string('System_Info_7') \
-		         + str(time) + ' ' + time_unit + self.NuBippyApp.get_string('System_Info_8')
+			output = self.NuBippyApp.get_string('System_Info_1') + self.NuBippyApp.chosenCurrency + self.NuBippyApp.get_string('System_Info_2') + self.vanity \
+			         + self.NuBippyApp.get_string('System_Info_3') + difficulty + self.NuBippyApp.get_string('System_Info_4') \
+			         + self.NuBippyApp.get_string('System_Info_5') + str(rate) + ' ' + rate_unit + '.' \
+			         + self.NuBippyApp.get_string('System_Info_6') + str(percentage) + self.NuBippyApp.get_string('System_Info_7') \
+			         + str(time) + ' ' + time_unit + self.NuBippyApp.get_string('System_Info_8')
+
 		self.mainLayout.clear_widgets()
 		self.mainLayout.add_widget(self.mainLabel)
 		self.mainLabel.text = output
@@ -282,7 +303,7 @@ class VanityScreen(Screen):
 
 	def read_output(self, dt):
 		"""
-			read the output of the vanitygen_linux_64 program and see if an address has been found
+			read the output of the vanitygen program and see if an address has been found
 		"""
 		line = self.output.stdout.readline()
 		if 'Address:' in line:
@@ -294,7 +315,7 @@ class VanityScreen(Screen):
 
 	def abort_vanitygen(self):
 		"""
-		    kill the vanitygen_linux_64 search and reset the ui
+		    kill the vanitygen search and reset the ui
 		"""
 		Clock.unschedule(self.update_counter)
 		Clock.unschedule(self.read_output)
@@ -304,7 +325,7 @@ class VanityScreen(Screen):
 
 	def run_vanitygen(self):
 		"""
-			run the vanitygen_linux_64 executable without the 'simulate' flag
+			run the vanitygen executable without the 'simulate' flag
 		"""
 		self.counter = Clock.schedule_interval(self.update_counter, 1)
 		self.reader = Clock.schedule_interval(self.read_output, 0.1)
@@ -314,7 +335,7 @@ class VanityScreen(Screen):
 
 		def kill_vanitygen():
 			"""
-				kill the vanitygen_linux_64 process.
+				kill the vanitygen process.
 				designed to be called atexit to cancel any unwanted long-running process
 			"""
 			os.kill(self.output.pid, 9)
@@ -325,7 +346,7 @@ class VanityScreen(Screen):
 
 	def display_vanity(self, values):
 		"""
-			show the results of the vanitygen_linux_64 process to the user
+			show the results of the vanitygen process to the user
 		"""
 		lines = values.split('\n')
 		for line in lines:
