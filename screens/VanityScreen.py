@@ -40,6 +40,7 @@ class VanityScreen(Screen):
 		self.feedback = self.ids.feedback.__self__
 		self.checkfieldLabel = self.ids.checkfieldLabel.__self__
 		self.checkfield = self.ids.checkfield.__self__
+		self.actionButton = self.ids.actionButton.__self__
 
 		self.reset_ui(None)
 		return
@@ -105,7 +106,11 @@ class VanityScreen(Screen):
 				self.command.append('-n')
 				self.command.append('S' + self.vanity)
 
-		output = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		try:
+			output = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		except OSError:
+			self.BippyApp.show_popup(self.BippyApp.get_string('Popup_Error'), self.BippyApp.get_string('Vanity_Run_Error'))
+			return
 
 		#first check for errors
 		error = output.stderr.read()
