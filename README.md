@@ -32,7 +32,7 @@ If at any point you want to stop the Action and return to the home screen, press
 
 ###The science bit
 
-#BIP0038
+####BIP0038
 
 The BIP0038 encryption method had to be modified slightly to work with NuBits and NuShares. Each valid private key can be used to hash an address for both NuBits and NuShares. The first step of the BIP0038 method is to generate an 'addresshash' which is added to the encrypted private key output. This is used to verify that the correct private key has been obtained when decryption happens. 
 To avoid confusion as to which address to use I decided to concatenate both possible addresses together:
@@ -41,12 +41,12 @@ addresshash = sha256(sha256(NuBits_address + Nushares_Address))[:4]
 
 Aside from that change, the BIP0038 method remians the same.
 
-#Vanitygen
+####Vanitygen
 
 The vanitygen binary used by NuBippy has been modified to always generate compressed private and public keys. this keeps it inline with the rest of the private nad public keys NuBippy is able to create.
 It has also been modified to accept two version numbers when a different version is specified. This allows for Nubit addresses to be generated which have a different version number to their corresponding private key.
 
-#Entropy
+####Entropy
 
 When generating private keys internally, NuBippy uses three different sources of Entropy. The most obvious is the user entered entropy which is collected when you draw dots over NuBippy with your mouse. This is combined with clock based and urandom based entropy to generate random private keys for better security.
 
