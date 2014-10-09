@@ -61,8 +61,11 @@
 				height: 40
 				pos: (90, 73)
 				font_size: 11
-				text: app.get_string('Case_Insensitive_Search')
+				text: '[ref=case]' + app.get_string('Case_Insensitive_Search') + '[/ref]'
 				text_size: self.size
+				markup: True
+				on_ref_press:
+					root.toggle_radio('case')
 
 			CheckBox:
 				id: caseCheck
@@ -79,8 +82,11 @@
 				height: 40
 				pos: (90, 43)
 				font_size: 11
-				text: app.get_string('Regex_Search')
+				text: '[ref=regex]' + app.get_string('Regex_Search') + '[/ref]'
 				text_size: self.size
+				markup: True
+				on_ref_press:
+					root.toggle_radio('regex')
 
 			CheckBox:
 				id: regexCheck

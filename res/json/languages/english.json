@@ -61,7 +61,7 @@
 	"Nushare_Address" : "NuShare Address",
 	"Nushares" : "NuShares",
 
-	"Vanity_Intro_Text" : "This action will allow you to generate a vanity address for NuBits or NuShares.\n\nPlease make sure you have selected either Nubits or Nushares in the dropdown on the top bar\nand then enter your vanity text in the box below.\n\nUse the 'case insensitive' and 'regex' options to speed up longer searches",
+	"Vanity_Intro_Text" : "This action will allow you to generate a vanity address for NuBits or NuShares.\n\nPlease make sure you have selected either Nubits or Nushares in the dropdown on the top bar\nand then enter your vanity text in the box below.\n\nUse the 'case insensitive' or 'regex' options to speed up longer searches",
 	"Vanity_Text" : "Vanity Text",
 	"Vanity_Run_Error" : "There was an error running vanitygen.\n\nTry again or report this issue.",
 

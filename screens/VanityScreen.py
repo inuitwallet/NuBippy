@@ -62,9 +62,9 @@ class VanityScreen(Screen):
 		self.mainLayout.add_widget(self.caseLabel)
 		self.caseCheck.active = False
 		self.mainLayout.add_widget(self.caseCheck)
-		#self.mainLayout.add_widget(self.regexLabel)
+		self.mainLayout.add_widget(self.regexLabel)
 		self.regexCheck.active = False
-		#self.mainLayout.add_widget(self.regexCheck)
+		self.mainLayout.add_widget(self.regexCheck)
 
 		self.passfield.text =''
 		self.checkfield.text = ''
@@ -74,6 +74,18 @@ class VanityScreen(Screen):
 		self.timer = None
 		self.address = ''
 		self.privkey = ''
+		return
+
+	def toggle_radio(self, button):
+		"""
+			When the text 'Case insenstive' is clicked, this method is fired to toggle the radio button
+		"""
+		if button == 'case':
+			self.caseCheck.active = not self.caseCheck.active
+			self.regexCheck.active = not self.caseCheck.active
+		if button == 'regex':
+			self.regexCheck.active = not self.regexCheck.active
+			self.caseCheck.active = not self.regexCheck.active
 		return
 
 	def submit_vanity(self, vanity, command=''):
@@ -139,11 +151,6 @@ class VanityScreen(Screen):
 				self.submit_vanity(self.vanity, self.command)
 				self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Warning'), self.NuBippyApp.get_string('Case_Sensitivity_Warning'))
 				return
-			#if '-r' not in self.command:
-			#	self.command.append('-r')
-			#	self.submit_vanity(self.vanity, self.command)
-			#	self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Warning'), self.NuBippyApp.get_string('Regex_Warning'))
-			#	return
 			#if we get here, none of the above worked so show the error
 			self.NuBippyApp.show_popup(self.NuBippyApp.get_string('Popup_Error'), error)
 			return
