@@ -1,6 +1,8 @@
 #NuBippy 
 ###fast and easy BIP0038 encryption and vanity addresses for NuBits and NuShares
 
+(donations [NBT] : BMJ2PJ1TNMwnTYUopQVxBrAPmmJjJjhd96)
+
 NuBippy is a port of Bippy [https://github.com/inuitwallet/bippy] specifically for NuBits and NuShares [https://nubits.com/]
 
 NuBippy is able to generate valid NuBit and NuShare private keys and addresses. It uses a customised BIP0038 encryption method [https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki] to add passphrase protected encryption to the private keys. Using a customised version of vanitygen [https://github.com/inuitwallet/vanitygen], NuBippy is able to generate vanity addresses for NuBits or NuShares and offer optional BIP0038 style encryption on those private keys too.
