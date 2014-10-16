@@ -15,10 +15,7 @@ if platform.system() == 'Linux':
 		_scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_lin_x86.so')
 #Windows
 if platform.system() == 'Windows':
-	if platform.architecture()[0] == '64bit':
-		_scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_win_86.pyd')
-	else:
-		_scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_win_x86.pyd')
+	_scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_win.pyd')
 #Mac
 if platform.system() == 'Darwin':
 	if platform.architecture()[0] == '64bit':
