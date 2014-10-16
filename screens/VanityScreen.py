@@ -113,7 +113,7 @@ class VanityScreen(Screen):
 		if command == '':
 			#vanitygen linux
 			if system() == 'Linux':
-				self.startupinfo = None
+				startupinfo = None
 				if architecture()[0] == '64bit':
 					self.command = ['./res/vanitygen/vanitygen_linux_64']
 				else:
@@ -126,7 +126,7 @@ class VanityScreen(Screen):
 
 			#Mac
 			if system() == 'Darwin':
-				self.startupinfo = None
+				startupinfo = None
 				if architecture()[0] == '64bit':
 					self.command = ['./res/vanitygen/vanitygen_mac_64']
 				else:
