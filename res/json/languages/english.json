@@ -93,6 +93,7 @@
 	"Regex_Warning" : "Your vanity text would make your public address invalid.\nNuBippy will search using the text as a regular expression instead.",
 
 	"Case_Insensitive_Search" : "Case Insensitive",
-	"Regex_Search" : "Regex"
+	"Regex_Search" : "Regex",
+	"Standard_Search" : "Standard"
 
 }
