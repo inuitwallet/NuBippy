@@ -120,8 +120,8 @@ class VanityScreen(Screen):
 					self.command = ['./res/vanitygen/vanitygen_linux']
 			#Windows
 			if system() == 'Windows':
-				self.startupinfo = subprocess.STARTUPINFO()
-				self.startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+				startupinfo = subprocess.STARTUPINFO()
+				startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 				self.command = ['./res/vanitygen/vanitygen.exe']
 
 			#Mac
@@ -149,7 +149,7 @@ class VanityScreen(Screen):
 				self.command.append('S' + self.vanity)
 
 		try:
-			output = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True, startupinfo=self.startupinfo)
+			output = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True, startupinfo=startupinfo)
 		except OSError:
 			self.BippyApp.show_popup(self.BippyApp.get_string('Popup_Error'), self.BippyApp.get_string('Vanity_Run_Error'))
 			return
@@ -352,7 +352,11 @@ class VanityScreen(Screen):
 		self.reader = Clock.schedule_interval(self.read_output, 0.1)
 		#self.command contains the full command we tested with so should work first time
 		self.command.remove('-n')
-		self.output = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True, startupinfo=self.startupinfo)
+		startupinfo = None
+		if system() == 'Windows':
+			startupinfo = subprocess.STARTUPINFO()
+			startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+		self.output = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True, startupinfo=startupinfo)
 
 		def kill_vanitygen():
 			"""
