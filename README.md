@@ -7,19 +7,25 @@ NuBippy is a port of Bippy [https://github.com/inuitwallet/bippy] specifically f
 
 NuBippy is able to generate valid NuBit and NuShare private keys and addresses. It uses a customised BIP0038 encryption method [https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki] to add passphrase protected encryption to the private keys. Using a customised version of vanitygen [https://github.com/inuitwallet/vanitygen], NuBippy is able to generate vanity addresses for NuBits or NuShares and offer optional BIP0038 style encryption on those private keys too.
 
-###Installing NuBippy
+###Windows installer
+
+NuBippy has been packaged into an installable file. The download will conatain the installer exe file, the source doe and a README file. It is available here:
+
+http://bippy.org/nubippy
+
+
+###Installing NuBippy from source
 
 NuBippy is built using Python 2.7 [https://www.python.org/downloads/] and Kivy [http://kivy.org/#download]. 
 Both will need to be installed on your computer before NuBippy will run. There are good instructions for installing both Python and Kivy on their respective websites. 
 
-On Windows Kivy comes as a portable application. It can be a bit of a faff to get it working first time but the instructions on the Kivy site are clearer than I can manage here.
-I intend to build some binary versions of NuBippy in the near future which should make this step unnecessary. I will update this README when that happens.
 
 ###Running NuBippy
 
-Once you have Python and Kivy installed simply clone this repository and run the NuBippy.py file
-The command used differs on different OSes. On Linux you use 'python NuBippy.py'. On Mac you use 'kivy NuBippy.py'. On windows you have to go through the procedure laid out on the Kivy website. 
-Again, once I have compiled some executable versions, this will be unnecessary.
+If you used the Windows installer, simply click the link on the desktop or in the start Menu
+
+Otherwise, once you have Python and Kivy installed, clone this repository and run the NuBippy.py file
+The command used differs on different OSes. On Linux you use 'python NuBippy.py'. On Mac you use 'kivy NuBippy.py'.
 
 NuBippy can be used totally offline. It also has no cache (unlike a web browser) so the keys it generates can be considered 'cold'.
 
@@ -55,7 +61,7 @@ When generating private keys internally, NuBippy uses three different sources of
 
 ###Known Issues
 
-The issues at the moment are to do with the compiling of the binaries that NuBippy needs to run. The two it uses are scrypt (fopr BIp0038 encryption) and vanitygen 9for vanity address generation).
+The issues at the moment are to do with the compiling of the binaries that NuBippy needs to run. The two it uses are scrypt (for BIP0038 encryption) and vanitygen (for vanity address generation).
 Nubippy currently has scrypt binaries for:
 Linux (64 bit)
 Linux (32 bit)
@@ -64,6 +70,9 @@ Windows (32 bit)
 
 and vanitygen binaries for:
 Linux (64 bit)
+Windows (32 bit)
+
+(Windows will only use the 32 bit version of these binaries so only Mac versions are missing)
 
 If you are able to compile vanitygen or scrypt for platforms not mentioned, please do so and share the binary with me. Thanks :)
 
