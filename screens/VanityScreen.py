@@ -109,11 +109,11 @@ class VanityScreen(Screen):
 		"""
 		#store the vanity text for later use
 		self.vanity = vanity
+		startupinfo = None
 		#build the command
 		if command == '':
 			#vanitygen linux
 			if system() == 'Linux':
-				startupinfo = None
 				if architecture()[0] == '64bit':
 					self.command = ['./res/vanitygen/vanitygen_linux_64']
 				else:
@@ -121,12 +121,11 @@ class VanityScreen(Screen):
 			#Windows
 			if system() == 'Windows':
 				startupinfo = subprocess.STARTUPINFO()
-				startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+				subprocess.STARTF_USESHOWWINDOW = 1
 				self.command = ['./res/vanitygen/vanitygen.exe']
 
 			#Mac
 			if system() == 'Darwin':
-				startupinfo = None
 				if architecture()[0] == '64bit':
 					self.command = ['./res/vanitygen/vanitygen_mac_64']
 				else:
@@ -149,7 +148,7 @@ class VanityScreen(Screen):
 				self.command.append('S' + self.vanity)
 
 		try:
-			output = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True, startupinfo=startupinfo)
+			output = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True, startupinfo=startupinfo, creationflags=0x8000000)
 		except OSError:
 			self.BippyApp.show_popup(self.BippyApp.get_string('Popup_Error'), self.BippyApp.get_string('Vanity_Run_Error'))
 			return
@@ -340,7 +339,7 @@ class VanityScreen(Screen):
 		"""
 		Clock.unschedule(self.update_counter)
 		Clock.unschedule(self.read_output)
-		os.kill(self.output.pid, 9)
+		os.kill(self.output.pid, 2)
 		self.reset_ui(None)
 		return
 
@@ -363,7 +362,7 @@ class VanityScreen(Screen):
 				kill the vanitygen process.
 				designed to be called atexit to cancel any unwanted long-running process
 			"""
-			os.kill(self.output.pid, 9)
+			self.abort_vanitygen()
 			return
 
 		atexit.register(kill_vanitygen)
