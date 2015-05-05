@@ -7,21 +7,21 @@ from ctypes import (cdll,
                     c_size_t, c_double, c_int, c_uint64, c_uint32,
                     create_string_buffer)
 
-#Linux
+# Linux
 if platform.system() == 'Linux':
-	if platform.architecture()[0] == '64bit':
-		_scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_lin_64.so')
-	else:
-		_scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_lin_x86.so')
+    if platform.architecture()[0] == '64bit':
+        _scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_lin_64.so')
+    else:
+        _scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_lin_x86.so')
 #Windows
 if platform.system() == 'Windows':
-	_scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_win.pyd')
+    _scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_win.pyd')
 #Mac
 if platform.system() == 'Darwin':
-	if platform.architecture()[0] == '64bit':
-		_scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_mac_64.so')
-	else:
-		_scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_mac_x86.so')
+    if platform.architecture()[0] == '64bit':
+        _scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_mac_64.so')
+    else:
+        _scrypt = cdll.LoadLibrary('res/scrypt/_scrypt_mac_x86.so')
 
 _scryptenc_buf = _scrypt.exp_scryptenc_buf
 _scryptenc_buf.argtypes = [c_char_p,  # const uint_t  *inbuf
@@ -36,15 +36,15 @@ _scryptenc_buf.argtypes = [c_char_p,  # const uint_t  *inbuf
 _scryptenc_buf.restype = c_int
 
 _scryptdec_buf = _scrypt.exp_scryptdec_buf
-_scryptdec_buf.argtypes = [c_char_p,           # const uint8_t *inbuf
-                           c_size_t,           # size_t         inbuflen
-                           c_char_p,           # uint8_t       *outbuf
+_scryptdec_buf.argtypes = [c_char_p,  # const uint8_t *inbuf
+                           c_size_t,  # size_t         inbuflen
+                           c_char_p,  # uint8_t       *outbuf
                            POINTER(c_size_t),  # size_t        *outlen
-                           c_char_p,           # const uint8_t *passwd
-                           c_size_t,           # size_t         passwdlen
-                           c_size_t,           # size_t         maxmem
-                           c_double,           # double         maxmemfrac
-                           c_double,           # double         maxtime
+                           c_char_p,  # const uint8_t *passwd
+                           c_size_t,  # size_t         passwdlen
+                           c_size_t,  # size_t         maxmem
+                           c_double,  # double         maxmemfrac
+                           c_double,  # double         maxtime
                            ]
 _scryptdec_buf.restype = c_int
 
@@ -102,7 +102,7 @@ def _ensure_bytes(data):
         return bytes(data, 'utf-8')
 
     return data
-            
+
 
 def encrypt(input, password,
             maxtime=MAXTIME_DEFAULT_ENC,
